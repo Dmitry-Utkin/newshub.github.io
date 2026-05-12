@@ -1,0 +1,1384 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости сегодня — полная версия</title>
+    <!-- Шрифт Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        /* ----- ОСНОВНЫЕ СТИЛИ ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f6f9;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Шапка */
+        .site-header {
+            max-width: 1440px;
+            margin: 0 auto;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.03);
+            padding: 0 24px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+            .logo-link:hover {
+                opacity: 0.8;
+            }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(145deg, #1e3c72 0%, #2a5298 100%);
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 12px rgba(26, 67, 113, 0.15);
+        }
+
+            .logo-icon svg {
+                width: 28px;
+                height: 28px;
+                filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+            }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.02em;
+            color: #0b1e33;
+        }
+
+        .logo-highlight {
+            color: #2a5298;
+        }
+
+        .page-headline {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1f2a41;
+            margin-left: 8px;
+            padding-left: 18px;
+            border-left: 2px solid #d0d9e8;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        /* Кнопка поиска и админ-кнопка */
+        .search-btn, .admin-btn {
+            background: #f0f3f8;
+            border: none;
+            border-radius: 40px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+            .search-btn:hover, .admin-btn:hover {
+                background: #e2e8f0;
+            }
+
+        /* Адаптивность */
+        @media (max-width: 700px) {
+            body {
+                padding: 12px;
+            }
+
+            .site-header {
+                height: auto;
+                min-height: 80px;
+                padding: 12px 20px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .header-left {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .page-headline {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                font-size: 1.3rem;
+                width: 100%;
+                margin-top: 4px;
+            }
+
+            .header-nav {
+                margin-left: auto;
+            }
+
+            .search-btn, .admin-btn {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        /* Основной контент */
+        .main-content {
+            max-width: 1440px;
+            margin: 24px auto 0;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            color: #1e2b3c;
+            flex: 1;
+        }
+
+        /* Подвал */
+        .site-footer {
+            max-width: 1440px;
+            margin: 24px auto 0;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px 32px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            color: #1e2b3c;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-contacts {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2a3b4e;
+        }
+
+        .footer-copyright {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Стили для статей (превью) */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .article-card {
+            background: #fafbfc;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid #eef2f6;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+            .article-card:hover {
+                background: #ffffff;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+                border-color: #d0d9e8;
+            }
+
+        .article-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #0b1e33;
+        }
+
+        .article-preview {
+            color: #475569;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .article-meta {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Полная статья */
+        .full-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+            .full-article h1 {
+                font-size: 2.2rem;
+                font-weight: 700;
+                margin-bottom: 24px;
+                color: #0b1e33;
+            }
+
+            .full-article .article-body {
+                font-size: 1.1rem;
+                line-height: 1.7;
+                color: #1e293b;
+            }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: #2a5298;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Админ-панель */
+        .admin-section {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-form {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 18px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+            .form-group label {
+                display: block;
+                font-weight: 500;
+                margin-bottom: 6px;
+            }
+
+            .form-group input, .form-group textarea, .form-group select {
+                width: 100%;
+                padding: 12px 16px;
+                border: 1px solid #d0d9e8;
+                border-radius: 14px;
+                font-family: inherit;
+                font-size: 1rem;
+                background: white;
+            }
+
+        .admin-article-item {
+            background: #fafbfc;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #eef2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+        }
+
+        .btn-small {
+            padding: 6px 14px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Модальное окно (поиск и логин) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 28px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #d0d9e8;
+            border-radius: 40px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .search-results {
+            list-style: none;
+        }
+
+        .search-result-item {
+            padding: 14px;
+            border-bottom: 1px solid #eef2f6;
+            cursor: pointer;
+        }
+
+            .search-result-item:hover {
+                background: #f4f6f9;
+            }
+
+        /* Утилиты */
+        .hidden {
+            display: none !important;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .flex {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Стиль для группы дата + время */
+        .datetime-group {
+            display: flex;
+            gap: 12px;
+        }
+
+            .datetime-group .form-group {
+                flex: 1;
+            }
+
+        /* ===== НОВЫЕ СТИЛИ ДЛЯ КАТЕГОРИЙ ===== */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 16px;
+            margin-bottom: 16px;
+            background: #f9fafc;
+            padding: 16px 20px;
+            border-radius: 40px;
+        }
+
+        .filter-label {
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .category-badge {
+            background: #eef2f6;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2a3b4e;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+        }
+
+            .category-badge:hover {
+                background: #dde3ed;
+            }
+
+            .category-badge.active {
+                background: #2a5298;
+                color: white;
+                border-color: #2a5298;
+            }
+
+        .article-category-tag {
+            display: inline-block;
+            background: #e6edf8;
+            color: #1e3c72;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-right: 8px;
+        }
+
+        .admin-category-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+            .admin-category-row .form-group {
+                flex: 2;
+            }
+
+            .admin-category-row .btn {
+                flex: 0 0 auto;
+            }
+
+        .category-manage-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            margin-bottom: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* ===== НОВЫЕ СТИЛИ ДЛЯ ИЗОБРАЖЕНИЙ ===== */
+        .article-card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            background: #e9edf2;
+        }
+
+        .full-article-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 24px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .image-upload-preview {
+            margin-top: 12px;
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 12px;
+            border: 1px solid #d0d9e8;
+            object-fit: cover;
+        }
+
+        .image-upload-wrapper {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .image-upload-controls {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ШАПКА -->
+    <header class="site-header">
+        <div class="header-left">
+            <!-- Логотип — возврат на главную -->
+            <a href="#" class="logo-link" id="logoHomeLink" aria-label="Главная страница">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z" fill="white" fill-opacity="0.95" />
+                            <path d="M7 7H17V9H7V7Z" fill="#1E3C72" />
+                            <path d="M7 11H14V13H7V11Z" fill="#1E3C72" />
+                            <path d="M7 15H17V17H7V15Z" fill="#1E3C72" />
+                            <path d="M17 11H19V13H17V11Z" fill="#1E3C72" />
+                        </svg>
+                    </div>
+                    <span class="logo-text">News<span class="logo-highlight">Hub</span></span>
+                </div>
+            </a>
+            <div class="page-headline">Новости сегодня</div>
+        </div>
+
+        <nav class="header-nav">
+            <!-- Кнопка поиска (функциональная) -->
+            <button class="search-btn" id="searchButton" aria-label="Поиск">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="6" stroke="#2a3b4e" stroke-width="1.8" stroke-linecap="round" />
+                    <path d="M13.5 13.5L17 17" stroke="#2a3b4e" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+            </button>
+            <!-- Кнопка входа в админку -->
+            <button class="admin-btn" id="adminButton" aria-label="Админ-панель">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="7" r="3" stroke="#2a3b4e" stroke-width="1.8" />
+                    <path d="M4 17C4 14.5 6.5 12 10 12C13.5 12 16 14.5 16 17" stroke="#2a3b4e" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ (динамический) -->
+    <main class="main-content" id="mainContent">
+        <!-- Здесь будет рендериться главная / статья / админка -->
+        <div id="homeView">
+            <h2 style="font-size: 2rem; font-weight: 600; margin-bottom: 8px;">Лента новостей</h2>
+            <!-- Блок фильтра по категориям -->
+            <div id="categoryFilterContainer" class="category-filter"></div>
+            <div id="articlesContainer" class="articles-grid"></div>
+        </div>
+        <div id="articleView" class="hidden"></div>
+        <div id="adminView" class="hidden"></div>
+    </main>
+
+    <!-- ПОДВАЛ с контактами -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-contacts">
+                <div class="contact-item">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="#2a5298"><path d="M2 3H18V17H2V3Z" stroke="#2a5298" stroke-width="1.5" fill="none" /><path d="M2 5L10 11L18 5" stroke="#2a5298" stroke-width="1.5" fill="none" /></svg>
+                    <span>newshub@yandex.ru</span>
+                </div>
+                <div class="contact-item">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#2a5298" stroke-width="1.5" /><path d="M10 6V10L13 12" stroke="#2a5298" stroke-width="1.5" /></svg>
+                    <span>+7 (495) 123-45-67</span>
+                </div>
+                <div class="contact-item">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2C6.5 2 4 4.5 4 8C4 12 10 18 10 18C10 18 16 12 16 8C16 4.5 13.5 2 10 2Z" stroke="#2a5298" stroke-width="1.5" /><circle cx="10" cy="8" r="2" stroke="#2a5298" stroke-width="1.5" /></svg>
+                    <span>Тула, ул. Советская, 10А</span>
+                </div>
+            </div>
+            <div class="footer-copyright">© 2025 NewsHub. Все права защищены.</div>
+        </div>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО ПОИСКА -->
+    <div class="modal-overlay" id="searchModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Поиск новостей</h3>
+                <button class="close-modal" id="closeSearchModal">&times;</button>
+            </div>
+            <input type="text" class="search-input" id="searchInput" placeholder="Введите запрос...">
+            <ul class="search-results" id="searchResults"></ul>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ЛОГИНА -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Вход в админ-панель</h3>
+                <button class="close-modal" id="closeLoginModal">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" id="loginUsername" placeholder="admin" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn" style="width:100%">Войти</button>
+            </form>
+            <div id="loginError" style="color:#dc2626; margin-top:12px; text-align:center;"></div>
+            <p style="margin-top:16px; font-size:0.9rem; color:#64748b; text-align:center;">Демо: admin / admin123</p>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            "use strict";
+
+            // ---------- ДАННЫЕ И ХРАНИЛИЩЕ ----------
+            const STORAGE_KEY = 'newsHubArticles';
+            const CATEGORIES_STORAGE_KEY = 'newsHubCategories';
+
+            // Хеш пароля "admin123" (SHA-256). Пароль в открытом виде не хранится.
+            const ADMIN_CREDS = {
+                username: 'admin',
+                passwordHash: '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'
+            };
+
+            // Категории по умолчанию
+            const defaultCategories = ['Политика', 'Технологии', 'Спорт', 'Культура', 'Наука'];
+
+            // Статьи по умолчанию (с заменёнными SVG-заглушками на растровые изображения)
+            const defaultArticles = [
+                {
+                    id: '1',
+                    title: 'Запуск новой космической миссии',
+                    preview: 'Сегодня состоялся успешный запуск ракеты-носителя...',
+                    content: 'Сегодня в 14:00 по московскому времени с космодрома Байконур стартовала ракета «Союз-2.1а» с грузовым кораблем. Миссия продлится 6 месяцев.',
+                    date: '2025-04-20T00:00',
+                    category: 'Наука',
+                    image: 'images/soyuz-2.jpg'   // <-- РАНЬШЕ БЫЛА SVG-ЗАГЛУШКА
+                },
+                {
+                    id: '2',
+                    title: 'В городе открылся новый IT-парк',
+                    preview: 'Площадка для стартапов и технологических компаний...',
+                    content: 'В центре города открылся инновационный IT-парк площадью 15 000 кв.м. Резиденты получат налоговые льготы и доступ к современной инфраструктуре.',
+                    date: '2025-04-19T00:00',
+                    category: 'Технологии',
+                    image: 'images/it-park.jpg'         // <-- РАНЬШЕ БЫЛА SVG-ЗАГЛУШКА
+                },
+                {
+                    id: '3',
+                    title: 'Фестиваль уличной еды возвращается',
+                    preview: 'Более 50 ресторанов представят свои блюда...',
+                    content: 'С 1 по 5 мая в Парке Горького пройдет ежегодный фестиваль. Гостей ждут мастер-классы, живая музыка и гастрономические открытия.',
+                    date: '2025-04-18T00:00',
+                    category: 'Культура',
+                    image: 'images/street-food-festival.jpg'   // <-- РАНЬШЕ БЫЛА SVG-ЗАГЛУШКА
+                }
+            ];
+
+            let articles = [];
+            let categories = [];
+            let isAdminLoggedIn = false;
+            let currentCategoryFilter = 'all'; // 'all' или название категории
+
+            // Состояние приложения
+            let currentView = 'home'; // 'home', 'article', 'admin'
+            let currentArticleId = null;
+
+            // ---------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ДАТЫ И ВРЕМЕНИ ----------
+            function formatDateTime(isoString) {
+                if (!isoString) return '';
+                try {
+                    const [datePart, timePart] = isoString.split('T');
+                    if (!datePart) return isoString;
+                    const [year, month, day] = datePart.split('-');
+                    let timeStr = '';
+                    if (timePart) {
+                        const [hours, minutes] = timePart.split(':');
+                        timeStr = `, ${hours}:${minutes}`;
+                    }
+                    return `${day}.${month}.${year}${timeStr}`;
+                } catch (e) {
+                    return isoString;
+                }
+            }
+
+            function normalizeArticleDate(article) {
+                if (article.date && !article.date.includes('T')) {
+                    article.date = article.date + 'T00:00';
+                }
+                // Добавляем поле image, если его нет (для совместимости со старыми данными)
+                if (article.image === undefined) article.image = null;
+                return article;
+            }
+
+            // ---------- ХЕШИРОВАНИЕ ПАРОЛЯ (SHA-256) ----------
+            async function hashPassword(password) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(password);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
+
+            // ---------- ИНИЦИАЛИЗАЦИЯ ДАННЫХ ----------
+            function loadCategories() {
+                const stored = localStorage.getItem(CATEGORIES_STORAGE_KEY);
+                if (stored) {
+                    categories = JSON.parse(stored);
+                } else {
+                    categories = [...defaultCategories];
+                }
+                saveCategories();
+            }
+            function saveCategories() {
+                localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories));
+            }
+
+            function loadArticles() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    articles = JSON.parse(stored);
+                } else {
+                    articles = [...defaultArticles];
+                }
+                // Нормализуем все статьи (на случай старых данных)
+                articles = articles.map(normalizeArticleDate);
+                // Убедимся, что у старых статей есть поле category (если нет — присвоим "Без категории")
+                articles = articles.map(a => ({ ...a, category: a.category || 'Без категории' }));
+                saveArticles();
+            }
+            function saveArticles() {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+            }
+
+            function checkAdminSession() {
+                const session = sessionStorage.getItem('adminLoggedIn');
+                isAdminLoggedIn = session === 'true';
+            }
+            function setAdminSession(value) {
+                isAdminLoggedIn = value;
+                sessionStorage.setItem('adminLoggedIn', value);
+            }
+
+            // ---------- РЕНДЕРИНГ ----------
+            const mainContent = document.getElementById('mainContent');
+            const homeView = document.getElementById('homeView');
+            const articleView = document.getElementById('articleView');
+            const adminView = document.getElementById('adminView');
+            const articlesContainer = document.getElementById('articlesContainer');
+            const categoryFilterContainer = document.getElementById('categoryFilterContainer');
+
+            function showView(view) {
+                homeView.classList.add('hidden');
+                articleView.classList.add('hidden');
+                adminView.classList.add('hidden');
+                if (view === 'home') {
+                    homeView.classList.remove('hidden');
+                    renderHome();
+                } else if (view === 'article') {
+                    articleView.classList.remove('hidden');
+                } else if (view === 'admin') {
+                    adminView.classList.remove('hidden');
+                    renderAdminPanel();
+                }
+                currentView = view;
+            }
+
+            // Рендер фильтра категорий
+            function renderCategoryFilter() {
+                if (!categoryFilterContainer) return;
+                const uniqueCategories = ['all', ...new Set(articles.map(a => a.category).filter(c => c))];
+                let html = `<span class="filter-label">Категории:</span><div class="filter-buttons">`;
+                html += `<button class="category-badge ${currentCategoryFilter === 'all' ? 'active' : ''}" data-category="all">Все</button>`;
+                categories.forEach(cat => {
+                    if (uniqueCategories.includes(cat) || cat === 'Без категории') {
+                        html += `<button class="category-badge ${currentCategoryFilter === cat ? 'active' : ''}" data-category="${cat}">${escapeHtml(cat)}</button>`;
+                    }
+                });
+                // Если есть статьи с категориями, которых нет в списке категорий (например, старые "Без категории")
+                articles.forEach(a => {
+                    if (!categories.includes(a.category) && a.category !== 'Без категории') {
+                        html += `<button class="category-badge ${currentCategoryFilter === a.category ? 'active' : ''}" data-category="${a.category}">${escapeHtml(a.category)}</button>`;
+                    }
+                });
+                html += `</div>`;
+                categoryFilterContainer.innerHTML = html;
+
+                document.querySelectorAll('.category-badge').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        currentCategoryFilter = btn.dataset.category;
+                        renderHome();
+                    });
+                });
+            }
+
+            // Главная: список статей с фильтрацией
+            function renderHome() {
+                renderCategoryFilter();
+                const grid = articlesContainer;
+                grid.innerHTML = '';
+                let filteredArticles = articles;
+                if (currentCategoryFilter !== 'all') {
+                    filteredArticles = articles.filter(a => a.category === currentCategoryFilter);
+                }
+                if (filteredArticles.length === 0) {
+                    grid.innerHTML = '<p>Новостей в этой категории пока нет.</p>';
+                    return;
+                }
+                // Сортировка по дате (новые сверху)
+                const sorted = [...filteredArticles].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+                sorted.forEach(article => {
+                    const card = document.createElement('div');
+                    card.className = 'article-card';
+                    // Добавляем изображение, если есть
+                    const imageHtml = article.image ? `<img class="article-card-image" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">` : '';
+                    card.innerHTML = `
+                                        ${imageHtml}
+                                        <h3 class="article-title">${escapeHtml(article.title)}</h3>
+                                        <p class="article-preview">${escapeHtml(article.preview || article.content.substring(0, 100) + '…')}</p>
+                                        <div class="article-meta">
+                                            <span class="article-category-tag">${escapeHtml(article.category || 'Без категории')}</span>
+                                            ${formatDateTime(article.date)}
+                                        </div>
+                                    `;
+                    card.addEventListener('click', () => {
+                        currentArticleId = article.id;
+                        renderArticleView(article);
+                        showView('article');
+                    });
+                    grid.appendChild(card);
+                });
+            }
+
+            function renderArticleView(article) {
+                const imageHtml = article.image ? `<img class="full-article-image" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">` : '';
+                articleView.innerHTML = `
+                                    <button class="back-button" id="backFromArticleBtn">
+                                        <svg width="18" height="18" viewBox="0 0 20 20"><path d="M12 16L6 10L12 4" stroke="#2a5298" stroke-width="2" fill="none"/></svg>
+                                        Назад к новостям
+                                    </button>
+                                    <div class="full-article">
+                                        <h1>${escapeHtml(article.title)}</h1>
+                                        ${imageHtml}
+                                        <div class="article-body">${escapeHtml(article.content).replace(/\n/g, '<br>')}</div>
+                                        <div style="margin-top: 24px; color: #64748b;">
+                                            <span class="article-category-tag" style="margin-right:12px;">${escapeHtml(article.category || 'Без категории')}</span>
+                                            ${formatDateTime(article.date)}
+                                        </div>
+                                    </div>
+                                `;
+                document.getElementById('backFromArticleBtn').addEventListener('click', () => showView('home'));
+            }
+
+            // Админ-панель (расширенная: категории, создание новых, загрузка изображений)
+            function renderAdminPanel() {
+                if (!isAdminLoggedIn) {
+                    adminView.innerHTML = `
+                                        <div class="admin-section">
+                                            <h2 style="margin-bottom:20px;">Доступ запрещён</h2>
+                                            <p>Необходимо войти в систему.</p>
+                                            <button class="btn mt-4" id="showLoginFromAdmin">Войти</button>
+                                        </div>
+                                    `;
+                    document.getElementById('showLoginFromAdmin').addEventListener('click', openLoginModal);
+                    return;
+                }
+
+                let html = `
+                                    <div class="admin-section">
+                                        <div class="admin-header">
+                                            <h2>Управление статьями</h2>
+                                            <button class="btn btn-secondary" id="adminLogoutBtn">Выйти</button>
+                                        </div>
+                                        <!-- Управление категориями -->
+                                        <div class="admin-form">
+                                            <h3>Категории</h3>
+                                            <div id="categoriesListContainer"></div>
+                                            <div class="admin-category-row mt-4">
+                                                <div class="form-group">
+                                                    <label>Новая категория</label>
+                                                    <input type="text" id="newCategoryName" placeholder="Название">
+                                                </div>
+                                                <button class="btn" id="addCategoryBtn">Добавить</button>
+                                            </div>
+                                        </div>
+                                        <div class="admin-form">
+                                            <h3 id="formTitle">Добавить новую статью</h3>
+                                            <form id="articleForm">
+                                                <input type="hidden" id="editId" value="">
+                                                <div class="form-group">
+                                                    <label>Заголовок</label>
+                                                    <input type="text" id="articleTitle" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Превью (краткое описание)</label>
+                                                    <input type="text" id="articlePreview">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Полный текст</label>
+                                                    <textarea id="articleContent" rows="5" required></textarea>
+                                                </div>
+                                                <div class="datetime-group">
+                                                    <div class="form-group">
+                                                        <label>Дата</label>
+                                                        <input type="date" id="articleDate">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Время</label>
+                                                        <input type="time" id="articleTime" value="00:00">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Категория</label>
+                                                    <select id="articleCategory"></select>
+                                                </div>
+                                                <!-- Новое поле: загрузка изображения -->
+                                                <div class="form-group">
+                                                    <label>Изображение (опционально)</label>
+                                                    <div class="image-upload-wrapper">
+                                                        <div class="image-upload-controls">
+                                                            <input type="file" id="articleImageFile" accept="image/*" style="padding: 8px 0;">
+                                                            <button type="button" class="btn-small btn-secondary mt-4" id="clearImageBtn">Очистить</button>
+                                                        </div>
+                                                        <div>
+                                                            <img id="imagePreview" class="image-upload-preview" style="display: none;" src="" alt="Предпросмотр">
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" id="articleImageData" value="">
+                                                </div>
+                                                <div class="flex">
+                                                    <button type="submit" class="btn">Сохранить</button>
+                                                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">Отмена</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <h3>Список статей</h3>
+                                        <div id="adminArticlesList"></div>
+                                    </div>
+                                `;
+                adminView.innerHTML = html;
+
+                // Заполнение списка категорий
+                const categorySelect = document.getElementById('articleCategory');
+                const categoriesListDiv = document.getElementById('categoriesListContainer');
+                const imageFileInput = document.getElementById('articleImageFile');
+                const imagePreview = document.getElementById('imagePreview');
+                const imageDataHidden = document.getElementById('articleImageData');
+                const clearImageBtn = document.getElementById('clearImageBtn');
+
+                // Функция для обновления предпросмотра изображения
+                function updateImagePreview(src) {
+                    if (src) {
+                        imagePreview.src = src;
+                        imagePreview.style.display = 'block';
+                        imageDataHidden.value = src;
+                    } else {
+                        imagePreview.style.display = 'none';
+                        imageDataHidden.value = '';
+                    }
+                }
+
+                // Обработчик выбора файла
+                imageFileInput.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (ev) {
+                            updateImagePreview(ev.target.result);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        updateImagePreview(null);
+                    }
+                });
+
+                clearImageBtn.addEventListener('click', function () {
+                    imageFileInput.value = '';
+                    updateImagePreview(null);
+                });
+
+                function refreshCategorySelect() {
+                    categorySelect.innerHTML = '';
+                    categories.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat;
+                        option.textContent = cat;
+                        categorySelect.appendChild(option);
+                    });
+                    // Добавим "Без категории" если нет в списке
+                    if (!categories.includes('Без категории')) {
+                        const opt = document.createElement('option');
+                        opt.value = 'Без категории';
+                        opt.textContent = 'Без категории';
+                        categorySelect.appendChild(opt);
+                    }
+                }
+
+                function renderCategoriesList() {
+                    let listHtml = '';
+                    categories.forEach(cat => {
+                        listHtml += `<div class="category-manage-item">
+                                        <span>${escapeHtml(cat)}</span>
+                                        <button class="btn-small btn-danger delete-category-btn" data-category="${cat}">Удалить</button>
+                                    </div>`;
+                    });
+                    categoriesListDiv.innerHTML = listHtml || '<p>Нет категорий</p>';
+
+                    document.querySelectorAll('.delete-category-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const catToDelete = btn.dataset.category;
+                            if (confirm(`Удалить категорию "${catToDelete}"? Статьи этой категории останутся, но будут отображаться как есть.`)) {
+                                categories = categories.filter(c => c !== catToDelete);
+                                saveCategories();
+                                renderAdminPanel(); // перерендерить админку
+                            }
+                        });
+                    });
+                }
+
+                refreshCategorySelect();
+                renderCategoriesList();
+
+                document.getElementById('addCategoryBtn').addEventListener('click', () => {
+                    const newCatInput = document.getElementById('newCategoryName');
+                    const newCat = newCatInput.value.trim();
+                    if (!newCat) return;
+                    if (categories.includes(newCat)) {
+                        alert('Такая категория уже существует');
+                        return;
+                    }
+                    categories.push(newCat);
+                    saveCategories();
+                    newCatInput.value = '';
+                    renderAdminPanel(); // обновить админку
+                });
+
+                const form = document.getElementById('articleForm');
+                const titleInp = document.getElementById('articleTitle');
+                const previewInp = document.getElementById('articlePreview');
+                const contentInp = document.getElementById('articleContent');
+                const dateInp = document.getElementById('articleDate');
+                const timeInp = document.getElementById('articleTime');
+                const editId = document.getElementById('editId');
+                const cancelBtn = document.getElementById('cancelEditBtn');
+                const formTitle = document.getElementById('formTitle');
+
+                function resetForm() {
+                    form.reset();
+                    editId.value = '';
+                    formTitle.textContent = 'Добавить новую статью';
+                    timeInp.value = '00:00';
+                    const today = new Date().toISOString().slice(0, 10);
+                    dateInp.value = today;
+                    if (categorySelect.options.length > 0) categorySelect.selectedIndex = 0;
+                    // Сброс изображения
+                    imageFileInput.value = '';
+                    updateImagePreview(null);
+                }
+
+                cancelBtn.addEventListener('click', resetForm);
+                resetForm();
+
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const id = editId.value;
+                    const dateVal = dateInp.value;
+                    const timeVal = timeInp.value || '00:00';
+                    const dateTimeISO = dateVal ? `${dateVal}T${timeVal}` : new Date().toISOString().slice(0, 16);
+                    const selectedCategory = categorySelect.value;
+                    const imageData = imageDataHidden.value || null;
+
+                    const newArticle = {
+                        id: id || Date.now().toString(),
+                        title: titleInp.value.trim(),
+                        preview: previewInp.value.trim(),
+                        content: contentInp.value.trim(),
+                        date: dateTimeISO,
+                        category: selectedCategory,
+                        image: imageData
+                    };
+                    if (!newArticle.title || !newArticle.content) return;
+
+                    if (id) {
+                        const index = articles.findIndex(a => a.id === id);
+                        if (index !== -1) articles[index] = newArticle;
+                    } else {
+                        articles.push(newArticle);
+                    }
+                    saveArticles();
+                    renderAdminPanel();
+                    if (currentView === 'home') renderHome();
+                });
+
+                // Список статей в админке
+                const listDiv = document.getElementById('adminArticlesList');
+                function renderAdminList() {
+                    listDiv.innerHTML = '';
+                    const sorted = [...articles].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+                    sorted.forEach(art => {
+                        const item = document.createElement('div');
+                        item.className = 'admin-article-item';
+                        item.innerHTML = `
+                                            <div>
+                                                <strong>${escapeHtml(art.title)}</strong>
+                                                <span class="article-category-tag">${escapeHtml(art.category || 'Без категории')}</span><br>
+                                                <small>${formatDateTime(art.date)}</small>
+                                                ${art.image ? '<span style="margin-left: 8px;">📷</span>' : ''}
+                                            </div>
+                                            <div class="flex">
+                                                <button class="btn-small btn-secondary edit-admin-btn" data-id="${art.id}">Ред.</button>
+                                                <button class="btn-small btn-danger delete-admin-btn" data-id="${art.id}">Удалить</button>
+                                            </div>
+                                        `;
+                        listDiv.appendChild(item);
+                    });
+                    document.querySelectorAll('.edit-admin-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const id = btn.dataset.id;
+                            const art = articles.find(a => a.id === id);
+                            if (art) {
+                                document.getElementById('editId').value = art.id;
+                                document.getElementById('articleTitle').value = art.title;
+                                document.getElementById('articlePreview').value = art.preview || '';
+                                document.getElementById('articleContent').value = art.content;
+                                const iso = art.date || '';
+                                if (iso.includes('T')) {
+                                    const [datePart, timePart] = iso.split('T');
+                                    document.getElementById('articleDate').value = datePart;
+                                    document.getElementById('articleTime').value = timePart.substring(0, 5);
+                                } else {
+                                    document.getElementById('articleDate').value = iso;
+                                    document.getElementById('articleTime').value = '00:00';
+                                }
+                                // Выбрать категорию
+                                const catSelect = document.getElementById('articleCategory');
+                                if (art.category) {
+                                    for (let opt of catSelect.options) {
+                                        if (opt.value === art.category) {
+                                            opt.selected = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                // Загрузить изображение
+                                if (art.image) {
+                                    updateImagePreview(art.image);
+                                } else {
+                                    updateImagePreview(null);
+                                }
+                                imageFileInput.value = ''; // сбросить input file
+                                document.getElementById('formTitle').textContent = 'Редактировать статью';
+                            }
+                        });
+                    });
+                    document.querySelectorAll('.delete-admin-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            if (confirm('Удалить статью?')) {
+                                const id = btn.dataset.id;
+                                articles = articles.filter(a => a.id !== id);
+                                saveArticles();
+                                renderAdminPanel();
+                                if (currentView === 'home') renderHome();
+                            }
+                        });
+                    });
+                }
+                renderAdminList();
+
+                document.getElementById('adminLogoutBtn').addEventListener('click', () => {
+                    setAdminSession(false);
+                    showView('home');
+                });
+            }
+
+            function escapeHtml(text) {
+                if (!text) return text;
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // ---------- МОДАЛЬНЫЕ ОКНА ----------
+            const searchModal = document.getElementById('searchModal');
+            const loginModal = document.getElementById('loginModal');
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+
+            function openSearchModal() {
+                searchModal.style.display = 'flex';
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+                searchInput.focus();
+            }
+            function closeSearchModal() {
+                searchModal.style.display = 'none';
+            }
+            function openLoginModal() {
+                loginModal.style.display = 'flex';
+                document.getElementById('loginError').textContent = '';
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+            }
+            function closeLoginModal() {
+                loginModal.style.display = 'none';
+            }
+
+            function performSearch(query) {
+                const q = query.toLowerCase();
+                const filtered = articles.filter(a =>
+                    a.title.toLowerCase().includes(q) ||
+                    (a.preview && a.preview.toLowerCase().includes(q)) ||
+                    a.content.toLowerCase().includes(q)
+                );
+                searchResults.innerHTML = '';
+                if (filtered.length === 0) {
+                    searchResults.innerHTML = '<li style="padding:14px; color:#64748b;">Ничего не найдено</li>';
+                    return;
+                }
+                filtered.forEach(art => {
+                    const li = document.createElement('li');
+                    li.className = 'search-result-item';
+                    li.innerHTML = `<strong>${escapeHtml(art.title)}</strong><br><small>${escapeHtml(art.preview || '')}</small>`;
+                    li.addEventListener('click', () => {
+                        closeSearchModal();
+                        currentArticleId = art.id;
+                        renderArticleView(art);
+                        showView('article');
+                    });
+                    searchResults.appendChild(li);
+                });
+            }
+
+            // ---------- ОБРАБОТЧИКИ СОБЫТИЙ ----------
+            document.addEventListener('DOMContentLoaded', () => {
+                loadCategories();
+                loadArticles();
+                checkAdminSession();
+                renderHome();
+                showView('home');
+
+                document.getElementById('logoHomeLink').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentCategoryFilter = 'all';
+                    showView('home');
+                });
+
+                document.getElementById('searchButton').addEventListener('click', openSearchModal);
+                document.getElementById('closeSearchModal').addEventListener('click', closeSearchModal);
+                searchInput.addEventListener('input', (e) => performSearch(e.target.value));
+
+                document.getElementById('adminButton').addEventListener('click', () => {
+                    if (isAdminLoggedIn) {
+                        showView('admin');
+                    } else {
+                        openLoginModal();
+                    }
+                });
+
+                document.getElementById('closeLoginModal').addEventListener('click', closeLoginModal);
+
+                // Обработчик логина с хешированием пароля
+                document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const username = document.getElementById('loginUsername').value.trim();
+                    const password = document.getElementById('loginPassword').value;
+
+                    if (username !== ADMIN_CREDS.username) {
+                        document.getElementById('loginError').textContent = 'Неверный логин или пароль';
+                        return;
+                    }
+
+                    try {
+                        const hashedInput = await hashPassword(password);
+                        if (hashedInput === ADMIN_CREDS.passwordHash) {
+                            setAdminSession(true);
+                            closeLoginModal();
+                            showView('admin');
+                        } else {
+                            document.getElementById('loginError').textContent = 'Неверный логин или пароль';
+                        }
+                    } catch (error) {
+                        console.error('Ошибка хеширования:', error);
+                        document.getElementById('loginError').textContent = 'Ошибка безопасности. Попробуйте позже.';
+                    }
+                });
+
+                window.addEventListener('click', (e) => {
+                    if (e.target === searchModal) closeSearchModal();
+                    if (e.target === loginModal) closeLoginModal();
+                });
+            });
+
+        })();
+    </script>
+</body>
+</html>
